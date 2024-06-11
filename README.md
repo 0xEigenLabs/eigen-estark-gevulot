@@ -24,6 +24,7 @@
      A local file localkey.pki is created in the current directory and the public key is printed for copying.
      > [!IMPORTANT]
      > You should send the above public key to Gevulot through https://airtable.com/appS1ebiXFs8H4OP5/pagVuySwNkMe95tIi/form .
+     
      > [!TIP] 
      > If you haven't received a reply email after one day, you can try the following deployment step using your key. If the attempt fails, please contact them on Telegram : https://t.me/gevulot.  
 
@@ -35,38 +36,51 @@
       $ sudo apt-get install qemu-kvm qemu-utils
      ``` 
       check the OPS :
-     ``` 
-          $ cat hi.js
+	``` 
+       $ cat hi.js
 	var http = require('http');  
 	http.createServer(function (req, res) {  
 	            res.writeHead(200, {'Content-Type': 'text/plain'});  
 	            res.end('Hello World\n');  
 	}).listen(8083, "0.0.0.0");  
 	console.log('Server running at http://127.0.0.1:8083/');  
-    ``` 
+ 	``` 
 
         run the ops test, if the installation is ok, it is similar to the following:
-    ``` 
+	``` 
 	$ ops pkg load eyberg/node:20.5.0 -p 8099 -f -n -a hi.js  
 	running local instance  
 	booting /home/devadmin/.ops/images/node ...  
 	en1: assigned 10.0.2.15  
 	Server running at http://127.0.0.1:8083/  
 	en1: assigned FE80::8B9:50FF:FE43:E7A0  
-    ``` 
+    	```
+     
        > [!WARNING]
-       > The above is for   Ubuntu, other system please refer to https://docs.ops.city/ops/getting_started.  
+       > The above is for  Ubuntu, other system please refer to https://docs.ops.city/ops/getting_started.  
 
-   4)Install the http  file server
-       If you utilize Amazon, Google, Microsoft, or any other third-party cloud service ,you can skip step 4).
-       a) git clone https://github.com/codeskyblue/gohttpserver.git
-       b)  Compile docker image:
+  4. Install the http  file server
+     > [!WARNING] 
+     > If you utilize Amazon, Google, Microsoft, or any other third-party cloud service ,you can skip step 4.
+
+	```
+        $ git clone https://github.com/codeskyblue/gohttpserver.git
+	```
+ 
+       Compile docker image:  
+       ```
            $ cd gohttpserver
            $ docker build --no-cache=true -t gohttpserver:v1.1 -f ./docker/Dockerfile .
-       c)  run the http server:
-           $ mkdir /data/http    (you can put some files in this directory for test)
+	```
+ 
+       run the http server:
+       ```
+           $ mkdir /data/http    (the http server root path)
            $ docker run -it --rm -d -p 8080:8000 -v /data/http:/app/public --name gohttpserver gohttpserver:v1.1
-          Note: if the http file server is ok,   the browser can visit it through the public IP and port 8080. (The port 8080 should be mapped to the machine in the router)
+	```
+
+ 	> [!NOTE]
+        > if the http file server is ok,   the browser can visit it through the public IP and port 8080. (The port 8080 should be mapped to the machine in the router)
 
        
 

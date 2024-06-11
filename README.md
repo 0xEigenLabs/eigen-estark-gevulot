@@ -1,14 +1,21 @@
-1.Prerequisites  
-  1）A Linux-based machine (e.g., Ubuntu Server 22.04 LTS).  
-  2）At least 16GB RAM with a 4-core CPU.  
-  3）Public IP address. (If you build your own http file server, you need to have a public IP.)  
-   
-2. Install the Rust(v1.79),  Cargo, Go(v1.22)  
-3. Install the Gevulot CLI:   
-     $ cargo install --git https://github.com/gevulotnetwork/gevulot.git gevulot-cli  
-      if ok, It is similar to the following, otherwise ,please check the enviroment $PATH.  
+## System requirements
+
+  1.A Linux-based machine (e.g., Ubuntu Server 22.04 LTS).  
+  2.At least 16GB RAM with a 4-core CPU.  
+  3.Public IP address. (If you build your own http file server, you need to have a public IP.)  
+  4.Install the Rust(v1.79),  Cargo, Go(v1.22)  
+
+## Installation
+
+  1. Install the Gevulot CLI:
+     ``` 
+     $ cargo install --git https://github.com/gevulotnetwork/gevulot.git gevulot-cli
+     ```
+      if ok, It is similar to the following, otherwise ,please check the enviroment $PATH.
+     ```
      $ gevulot-cli -V  
-      gevulot-cli 0.1.0  
+      gevulot-cli 0.1.0
+     ```
 
 4. Register Gevulot Key  
      $ gevulot-cli generate-key   

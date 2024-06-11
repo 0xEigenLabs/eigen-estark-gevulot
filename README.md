@@ -22,20 +22,21 @@
      $ gevulot-cli generate-key
         ``` 
      A local file localkey.pki is created in the current directory and the public key is printed for copying.
-     > [!IMPORTANT]
+     > [!IMPORTANT]  
      > You should send the above public key to Gevulot through https://airtable.com/appS1ebiXFs8H4OP5/pagVuySwNkMe95tIi/form .
      
-     > [!TIP] 
+     > [!TIP]   
      > If you haven't received a reply email after one day, you can try the following deployment step using your key. If the attempt fails, please contact them on Telegram : https://t.me/gevulot.  
 
   3. Install the OPS （Ubuntu）
      ``` 
       $ curl https://ops.city/get.sh -sSfL | sh
-     ```
-     ``` 
+  
       $ sudo apt-get install qemu-kvm qemu-utils
-     ``` 
+     ```
+     
       check the OPS :
+     
 	``` 
        $ cat hi.js
 	var http = require('http');  
@@ -47,6 +48,7 @@
  	``` 
 
         run the ops test, if the installation is ok, it is similar to the following:
+	
 	``` 
 	$ ops pkg load eyberg/node:20.5.0 -p 8099 -f -n -a hi.js  
 	running local instance  
@@ -56,11 +58,11 @@
 	en1: assigned FE80::8B9:50FF:FE43:E7A0  
     	```
      
-       > [!WARNING]
+       > [!WARNING] 
        > The above is for  Ubuntu, other system please refer to https://docs.ops.city/ops/getting_started.  
 
-  4. Install the http  file server
-     > [!WARNING] 
+  5. Install the http  file server
+     > [!WARNING]   
      > If you utilize Amazon, Google, Microsoft, or any other third-party cloud service ,you can skip step 4.
 
 	```

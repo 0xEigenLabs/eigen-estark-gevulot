@@ -1,7 +1,7 @@
 1.Prerequisites
-    1）A Linux-based machine (e.g., Ubuntu Server 22.04 LTS).
-    2）At least 16GB RAM with a 4-core CPU.
-    3）Public IP address. (If you build your own http file server, you need to have a public IP.)
+1）A Linux-based machine (e.g., Ubuntu Server 22.04 LTS).
+2）At least 16GB RAM with a 4-core CPU.
+3）Public IP address. (If you build your own http file server, you need to have a public IP.)
    
 
 2.Installation

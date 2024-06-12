@@ -36,8 +36,7 @@
      ```
      
       check the OPS :
-     
-	``` 
+     ```
        $ cat hi.js
 	var http = require('http');  
 	http.createServer(function (req, res) {  
@@ -45,18 +44,17 @@
 	            res.end('Hello World\n');  
 	}).listen(8083, "0.0.0.0");  
 	console.log('Server running at http://127.0.0.1:8083/');  
- 	``` 
+     ```
 
         run the ops test, if the installation is ok, it is similar to the following:
-	
-	``` 
+     ```
 	$ ops pkg load eyberg/node:20.5.0 -p 8099 -f -n -a hi.js  
 	running local instance  
 	booting /home/devadmin/.ops/images/node ...  
 	en1: assigned 10.0.2.15  
 	Server running at http://127.0.0.1:8083/  
 	en1: assigned FE80::8B9:50FF:FE43:E7A0  
-    	```
+     ```
      
        > [!WARNING] 
        > The above is for  Ubuntu, other system please refer to https://docs.ops.city/ops/getting_started.  

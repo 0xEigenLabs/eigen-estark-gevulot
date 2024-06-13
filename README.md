@@ -3,7 +3,7 @@
       ![image](https://github.com/gavin-ygy/estark-gevulot/assets/762545/6edb5c87-1c95-496c-b505-1fc979493b30)
 
 
-   2. System Introduction
+   2. Introduction  
       2.1 The user's prover or verifier programs must be packaged into OPS-formatted NonaVMs. Then, the NonaVMs can be  transmitted to the Gevulot server through  the Gevulot client, and the server schedules them to run on OPS.
 
       2.2 The Gevulot server mandates the sequential execution of the prover and verifier, regardless of whether the verifier performs any specific function or not.  
@@ -60,7 +60,7 @@
 	console.log('Server running at http://127.0.0.1:8083/');  
      ```
 
-        run the ops test, if the installation is ok, it is similar to the following:
+        If the installation is ok, it is similar to the following:
      ```
 	$ ops pkg load eyberg/node:20.5.0 -p 8099 -f -n -a hi.js  
 	running local instance  
@@ -96,6 +96,18 @@
  	> [!NOTE]
         > if the http file server is ok,   the browser can visit it through the public IP and port 8080. (The port 8080 should be mapped to the machine in the router)
 
+## Prover/Verifier Integration
+     Please see the test programs : tests/shell-test/src/prover.rs and verifier.rs
 
+## Prover/Verifier Packaging
+     1.ewrewrwr  
+     2. werwrw
+     
+## Prover/Verifier Deployment
+     1.ewrewrwr  
+     2. werwrw
 
+## Prover/Verifier running
+     1.ewrewrwr  
+     2. werwrw
     

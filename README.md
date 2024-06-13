@@ -1,4 +1,16 @@
-## System requirements
+ ## Gevulot Overview
+   1. System diagram
+      ![image](https://github.com/gavin-ygy/estark-gevulot/assets/762545/6edb5c87-1c95-496c-b505-1fc979493b30)
+
+
+   2. features
+      The Gevulot   server mandates the sequential execution of the prover and verifier, regardless of whether the verifier performs any specific function or not.  
+      When  querying a transaction through the Gevulot client, the server will only return relevant task information to the client if it has successfully obtained the task.result from the verifier.
+       Otherwise,  an error will be returned,such as "An error while fetching transaction tree: RPC response error:not found: no root tx found for xxxxxx...".
+
+
+
+## Local system requirements
 
   1. A Linux-based machine (e.g., Ubuntu Server 22.04 LTS).  
   2. At least 16GB RAM with a 4-core CPU.  
@@ -82,16 +94,6 @@
  	> [!NOTE]
         > if the http file server is ok,   the browser can visit it through the public IP and port 8080. (The port 8080 should be mapped to the machine in the router)
 
- ## Gevulot Overview
-   1. System diagram
-      ![image](https://github.com/gavin-ygy/estark-gevulot/assets/762545/2ec3fc33-3b6b-4ec8-9f20-8065f18caf17)
-
-   2. features
-      The Gevulot   server mandates the sequential execution of the prover and verifier, regardless of whether the verifier performs any specific function or not.  
-      When  querying a transaction through the Gevulot client, the server will only return relevant task information to the client if it has successfully obtained the task.result from the verifier.
-       Otherwise,  an error will be returned,such as "An error while fetching transaction tree: RPC response error:not found: no root tx found for xxxxxx...".
-
-   4. 354535  
 
 
     

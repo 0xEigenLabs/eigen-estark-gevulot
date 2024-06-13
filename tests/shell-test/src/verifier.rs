@@ -3,7 +3,7 @@ use clap::{command, Parser};
 
 
 use starky::prove::stark_prove;
-use starky::prove::gevulot_verify;
+
 use std::time::Instant;
 use std::fs;
 

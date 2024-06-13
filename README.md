@@ -89,7 +89,7 @@
  
        run the http server:
        ```
-           $ mkdir /data/http    (the http server root path)
+           $ mkdir /data/http    (the http server's working path)
            $ docker run -it --rm -d -p 8080:8000 -v /data/http:/app/public --name gohttpserver gohttpserver:v1.1
 	```
 
@@ -116,8 +116,32 @@
 
 
 ## Prover/Verifier Packaging
-     1. You should create a packaging directory  such as  ~/packaging.Then copy the files ( tests/shell-test/scripts/* ) to ~/packaging .      
-     2. You
+     1. You should create a packaging directory  such as  ~/packaging.
+         Then copy all the files   to ~/packaging .
+	 $ cp -a  tests/shell-test/scripts/*  ~/packaging/  
+  
+     2. Please  edit the file ~/packaging/my-local-key.pki  according the above  "2. Register Gevulot Key".
+
+     3. my_prover.json and my_verifier.json are for ops building images ,eg.
+        $ cat my_prover.json
+	{
+	  "ManifestPassthrough": {
+	    "readonly_rootfs": "true"
+	  },
+	  "Env":{
+	    "RUST_BACKTRACE": "1",
+	    "RUST_LOG": "debug"
+	  },
+	  "Program":"prover",            //the binary name of your prover
+	  "Mounts": {
+	    "%1": "/workspace"
+	  },
+	 "Files": ["gevulot/starkStruct.json"]      //the prover's configure file , you should modify it according your prover !!
+	
+	}
+
+       4. copy the compiled prover/verifier to  ~/packaging .   
+         If your http file server's working path is /data/http, you can run the pack.sh to package  the prover/verifier and deploy them to the gevulot server .
      
 ## Prover/Verifier Deployment
      1.ewrewrwr  

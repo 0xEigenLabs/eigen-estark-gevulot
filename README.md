@@ -1,11 +1,13 @@
- ## Gevulot Overview
+ ## Gevulot Overview(not inluding the blockchain)
    1. System diagram
       ![image](https://github.com/gavin-ygy/estark-gevulot/assets/762545/6edb5c87-1c95-496c-b505-1fc979493b30)
 
 
-   2. features
-      The Gevulot   server mandates the sequential execution of the prover and verifier, regardless of whether the verifier performs any specific function or not.  
-      When  querying a transaction through the Gevulot client, the server will only return relevant task information to the client if it has successfully obtained the task.result from the verifier.
+   2. System Introduction
+      2.1 The user's prover or verifier programs must be packaged into OPS-formatted NonaVMs. Then, the NonaVMs can be  transmitted to the Gevulot server through  the Gevulot client, and the server schedules them to run on OPS.
+
+      2.2 The Gevulot server mandates the sequential execution of the prover and verifier, regardless of whether the verifier performs any specific function or not.  
+      2.3 When  querying a transaction through the Gevulot client, the server will only return relevant task information to the client if it has successfully obtained the task.result from the verifier.
        Otherwise,  an error will be returned,such as "An error while fetching transaction tree: RPC response error:not found: no root tx found for xxxxxx...".
 
 

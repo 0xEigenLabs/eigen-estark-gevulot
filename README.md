@@ -115,15 +115,22 @@
      > 2. To familiarize yourself with the debugging of the Gevulot  framework, it is recommended to comment out the Prove function inside the Prover. This way, after remotely running the prover/verifier, you will be able to immediately obtain the  prover's  log file  that can help you debug the program.
 
 
-## Prover/Verifier Packaging
-     1. You should create a packaging directory  such as  ~/packaging.
-         Then copy all the files   to ~/packaging .
-	 $ cp -a  tests/shell-test/scripts/*  ~/packaging/  
-  
-     2. Please  edit the file ~/packaging/my-local-key.pki  according the above  "2. Register Gevulot Key".
+## Prover/Verifier Packaging and Deployment
 
-     3. my_prover.json and my_verifier.json are for ops building images ,eg.
-        $ cat my_prover.json
+1. You should create a packaging directory  such as  ~/packaging.  
+   Then copy all the following files   to ~/packaging .
+
+```sh
+   $ cp -a  tests/shell-test/scripts/*  ~/packaging/  
+```
+  
+2. Please  edit the file ~/packaging/my-local-key.pki  according the above  "2. Register Gevulot Key".
+
+3. my_prover.json and my_verifier.json are for ops building images ,eg.
+
+$ cat my_prover.json
+
+```json
 	{
 	  "ManifestPassthrough": {
 	    "readonly_rootfs": "true"
@@ -132,16 +139,72 @@
 	    "RUST_BACKTRACE": "1",
 	    "RUST_LOG": "debug"
 	  },
-	  "Program":"prover",            //the binary name of your prover
+	  "Program":"prover",            //the binary file name of your prover which must be consistent with the prover name in pack.sh and deploy.sh
 	  "Mounts": {
 	    "%1": "/workspace"
 	  },
 	 "Files": ["gevulot/starkStruct.json"]      //the prover's configure file , you should modify it according your prover !!
-	
+	                                            //the file starkStruct.json will be packaged into OPS'S NanoVM image.
 	}
+```
 
-       4. copy the compiled prover/verifier to  ~/packaging .   
-         If your http file server's working path is /data/http, you can run the pack.sh to package  the prover/verifier and deploy them to the gevulot server .
+4. copy the compiled prover/verifier to  ~/packaging .
+   
+5. If your http file server's working path is /data/http, you can run the pack.sh  
+   to package  the prover/verifier and deploy them to the gevulot server .  
+$ cat pack.sh
+
+```sh
+ops build ./prover  -c my_prover.json        ###build prover NanoVM image
+ops build ./verifier  -c my_verifier.json
+
+cp   ~/.ops/images/prover  /data/http/
+cp   ~/.ops/images/verifier  /data/http/
+
+
+PHSH=$(gevulot-cli calculate-hash --file ~/.ops/images/prover)
+echo "prover hash:$PHSH"
+
+p_array=(${PHSH//:/ })
+p_hsh=${p_array[6]}
+
+VHSH=$(gevulot-cli calculate-hash --file  ~/.ops/images/verifier)
+echo "verifier hash: $VHSH "
+
+v_array=(${VHSH//:/ })
+v_hsh=${v_array[6]}
+
+echo "deploy the new image to gevulot:(NOTICE: Verifier should use its HASH!)"
+./deploy.sh $p_hsh $v_hsh
+```
+
+6. Deploy the prover/verifier
+$ cat deploy.sh
+
+```sh
+gevulot-cli --jsonurl "http://api.devnet.gevulot.com:9944" --keyfile my-local-key.pki \
+        deploy \
+        --name " prover & verifier" \
+        --prover $1 \
+        --provername '#eigen-gevulot-prover' \
+        --proverimgurl 'http://4.145.88.10:8080/prover' \      
+        --provercpus 32 \
+        --provermem 65536 \
+        --provergpus 0 \
+        --verifier $2 \
+        --verifiername '#eigen-gevulot-verifier' \
+        --verifierimgurl 'http://4.145.88.10:8080/verifier' \
+        --verifiercpus 4  \
+        --verifiermem 4096  \
+        --verifiergpus 0
+```
+
+> [!IMPORTANT]
+>  1.If you utilize Amazon, Google, Microsoft, or any other third-party cloud service, you should replace the above  "http://4.145.88.10:8080/"
+>  2. The above "--provermem 65536" means prover need 64G memory
+
+7. 2343242
+         
      
 ## Prover/Verifier Deployment
      1.ewrewrwr  

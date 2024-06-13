@@ -1,9 +1,9 @@
- ## Gevulot Overview(not inluding the blockchain)
+ ## Gevulot Overview(not including the blockchain)
    1. System diagram
       ![image](https://github.com/gavin-ygy/estark-gevulot/assets/762545/6edb5c87-1c95-496c-b505-1fc979493b30)
 
 
-   2. Introduction  
+   2. Key Points    
       2.1 The user's prover or verifier programs must be packaged into OPS-formatted NonaVMs. Then, the NonaVMs can be  transmitted to the Gevulot server through  the Gevulot client, and the server schedules them to run on OPS.
 
       2.2 The Gevulot server mandates the sequential execution of the prover and verifier, regardless of whether the verifier performs any specific function or not.  
@@ -97,10 +97,15 @@
         > if the http file server is ok,   the browser can visit it through the public IP and port 8080. (The port 8080 should be mapped to the machine in the router)
 
 ## Prover/Verifier Integration
-     Please see the test programs : tests/shell-test/src/prover.rs and verifier.rs
+     Please see the test programs : tests/shell-test/src/prover.rs and verifier.rs  .
+     Before compiling the prover/verifier, you ...
+     > [!IMPORTANT]
+     > 1. The gevulot-cli can't get the dubug messages of the prover/verifier unless you seek assistance from their engineers.  
+     > 2. To familiarize yourself with the debugging of the Gevulot  framework, it is recommended to comment out the Prove function inside the Prover. This way, after remotely running the prover/verifier, you will be able to immediately obtain the  prover's  log file  that can help you debug the program.
+
 
 ## Prover/Verifier Packaging
-     1.ewrewrwr  
+     1.
      2. werwrw
      
 ## Prover/Verifier Deployment

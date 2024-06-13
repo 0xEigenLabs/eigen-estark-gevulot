@@ -97,16 +97,27 @@
         > if the http file server is ok,   the browser can visit it through the public IP and port 8080. (The port 8080 should be mapped to the machine in the router)
 
 ## Prover/Verifier Integration
-     Please see the test programs : tests/shell-test/src/prover.rs and verifier.rs  .
-     Before compiling the prover/verifier, you ...
+     Please refer to the test programs : tests/shell-test/src/prover.rs and verifier.rs  .
+     Before compiling the test prover/verifier, please download the submodule code.
+     
+     $  git submodule update --init --recursive
+	Submodule 'eigen-zkvm' (https://github.com/0xEigenLabs/eigen-zkvm) registered for path 'eigen-zkvm'
+	Submodule 'gevulot' (https://github.com/gevulotnetwork/gevulot.git) registered for path 'gevulot'
+	Cloning into '/data/gavin/test/estark-gevulot/eigen-zkvm'...
+	Cloning into '/data/gavin/test/estark-gevulot/gevulot'...
+	Submodule path 'eigen-zkvm': checked out '69de4af8688e8e220f4d403a48ae804b9a755259'
+	Submodule path 'gevulot': checked out '82bff1109b96700470f0f7fb192e5ca0ad389251'
+
+     Then , compile the program.
+     
      > [!IMPORTANT]
      > 1. The gevulot-cli can't get the dubug messages of the prover/verifier unless you seek assistance from their engineers.  
      > 2. To familiarize yourself with the debugging of the Gevulot  framework, it is recommended to comment out the Prove function inside the Prover. This way, after remotely running the prover/verifier, you will be able to immediately obtain the  prover's  log file  that can help you debug the program.
 
 
 ## Prover/Verifier Packaging
-     1.
-     2. werwrw
+     1. You should create a packaging directory  such as  ~/packaging.Then copy the files ( tests/shell-test/scripts/* ) to ~/packaging .      
+     2. You
      
 ## Prover/Verifier Deployment
      1.ewrewrwr  

@@ -172,7 +172,8 @@ $ cat my_prover.json
 
 4. copy the compiled prover/verifier to  ~/packaging .
    
-5. Package the prover/verifier 
+5. Package the prover/verifier
+   
 $ cat pack.sh
 
 ```sh
@@ -200,6 +201,7 @@ echo "deploy the new image to gevulot:(NOTICE: Verifier should use its HASH!)"
 ```
 
 6. Deploy the prover/verifier
+   
 $ cat deploy.sh
 
 ```sh
@@ -248,27 +250,31 @@ Tx Hash:57991f11873da0d0a3a2fa578402476100a640618c4d5171fa5381292f9f8b3e
          
      
 ## Prover/Verifier running
-1. Enter the packaging directory, such as :
+1. Copy the prover's input files to HTTP server's working path (eg. /data/http/)
+   
+   $cp tests/shell-test/input-files/*  /data/http/
+
+3. Enter the packaging directory, such as :
 
    $cd ~/packaging  
    then  
    $copy   my-local-key.pki localkey.pki
 
-2. Generate the run_task.sh with the run_task.tmpl (replace the PHSH/VHSH with the hash which the deployment returned above)
+4. Generate the run_task.sh with the run_task.tmpl (replace the PHSH/VHSH with the hash which the deployment returned above)
 
    $ ./generate_task.sh  e78145a32b208a22b34e03cc6a6146d35683801cc97309ab86ae3ec1f0f26d70 3032e67af5a5d4bc058515956911570417d0481183a7c753b907b11a8f97a45f
 
 > [!IMPORTANT]
 > generate_task.sh's first parameter is the prover's hash(PHSH) and the second is the verifier's hash(VHSH) !!
 
-3. Run the prover/verifier
+4. Run the prover/verifier
 
    $ ./run_task.sh  
-Programs send to execution correctly. Tx hash:45a08da9ec877ac4b5e205b56c53e16ebad0b190a11305c7f51d1d3233e1b164
+    Programs send to execution correctly. Tx hash:45a08da9ec877ac4b5e205b56c53e16ebad0b190a11305c7f51d1d3233e1b164
 
    The prover/verifier is expected to finish running in approximately 15 minutes .
 
-4. Query the result
+5. Query the result
    
    Note: the parameter is the tx hash which the run_task.sh returned .
 
@@ -287,7 +293,7 @@ Root: 45a08da9ec877ac4b5e205b56c53e16ebad0b190a11305c7f51d1d3233e1b164
                 Leaf: eb446a87bafe1da6a61299debd317eccf4f015240180bc032c84fae005367650
 ```
 
-5.Get the return files from the prover/verifier  
+6.Get the return files from the prover/verifier  
 Note: the parameter is the above  "Leaf: eb446a87bafe1da6a61299debd317eccf4f015240180bc032c84fae005367650 " .  
 
 ```
@@ -303,6 +309,12 @@ http://34.88.251.176:9995/txfiles/eb446a87bafe1da6a61299debd317eccf4f015240180bc
 http://34.88.251.176:9995/txfiles/eb446a87bafe1da6a61299debd317eccf4f015240180bc032c84fae005367650/2be56804021c50ae21f4bb345cf3b1d7af3c81c5d12e428b1518eeb5866c8351/test.log
 
 You can download them through the browser or wget .
+
+7. The Gevulot's cmd_args
+
+![image](https://github.com/gavin-ygy/estark-gevulot/assets/762545/e4252181-f325-4187-b1d3-39e8907b3395)
+
+
 
 
 

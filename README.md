@@ -315,12 +315,12 @@ You can download them through the browser or wget .
 
 ![image](https://github.com/gavin-ygy/estark-gevulot/assets/762545/e4252181-f325-4187-b1d3-39e8907b3395)
 
-> [!NOTE]
+> [!IMPORTANT]
 > The template includes two parts: prover and verifier.  
-> /workspace  is mount path  
-> /gevulot  is  config file path in the image (see my_prover.json,  )
-> Get the input file's hash : gevulot-cli calculate-hash --file jsn_fibonacci.recursive2.pil.json
-> The prover's output file name must be consistent with the file name returned in the prover.rs and verifier.rs .
+> /workspace  is mount path.  
+> /gevulot  is  config file path in the image (see my_prover.json,  ).   
+> Get the input file's hash : gevulot-cli calculate-hash --file jsn_fibonacci.recursive2.pil.json.   
+> The prover's output file name must be consistent with the file name returned in the prover.rs and verifier.rs .  
 
 
 

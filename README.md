@@ -177,10 +177,11 @@ $ cat my_prover.json
 $ cat pack.sh
 
 ```sh
-ops build ./prover  -c my_prover.json        ###build prover NanoVM image
+ops build ./prover  -c my_prover.json      ###build prover NanoVM image. If the prover need configure file,eg.starkStruct.json ,
+                                           ## you mkdir gevulot and cp starkStruct.json  gevulot/  .
 ops build ./verifier  -c my_verifier.json
 
-cp   ~/.ops/images/prover  /data/http/       ## copy the packaged prover/verifier to HTTP file server's working path !! 
+cp   ~/.ops/images/prover  /data/http/       ## copy the packaged prover/verifier to HTTP  server's working path !! 
 cp   ~/.ops/images/verifier  /data/http/
 
 
@@ -310,10 +311,16 @@ http://34.88.251.176:9995/txfiles/eb446a87bafe1da6a61299debd317eccf4f015240180bc
 
 You can download them through the browser or wget .
 
-7. The Gevulot's cmd_args
+7. The Gevulot's task template
 
 ![image](https://github.com/gavin-ygy/estark-gevulot/assets/762545/e4252181-f325-4187-b1d3-39e8907b3395)
 
+> [!NOTE]
+> The template includes two parts: prover and verifier.  
+> /workspace  is mount path  
+> /gevulot  is  config file path in the image (see my_prover.json,  )
+> Get the input file's hash : gevulot-cli calculate-hash --file jsn_fibonacci.recursive2.pil.json
+> The prover's output file name must be consistent with the file name returned in the prover.rs and verifier.rs .
 
 
 

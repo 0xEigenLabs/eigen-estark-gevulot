@@ -3,18 +3,25 @@
 1. System diagram
       ![image](https://github.com/gavin-ygy/estark-gevulot/assets/762545/6edb5c87-1c95-496c-b505-1fc979493b30)
 
+> [!NOTE]
+> For more information about Gevulot see: https://docs.gevulot.com/gevulot-docs .  
+> For more information about OPS see: https://docs.ops.city/ops  
 
 2. Key Points
-   
-2.1 The user's prover or verifier programs must be packaged into OPS-formatted NonaVMs. Then, the NonaVMs can be  transmitted to the Gevulot server through  the Gevulot client, and the server schedules them to run on OPS.
 
-2.2 The Gevulot server mandates the sequential execution of the prover and verifier, regardless of whether the verifier performs any specific function or not.  
+```
+   1) The user's prover or verifier programs must be packaged into OPS-formatted NonaVMs file.
+      Then, the NonaVMs can be  transmitted to the Gevulot server through    
+       the Gevulot client, and the server schedules them to run on OPS.
+
+   2) The Gevulot server mandates the sequential execution of the prover and verifier,  
+      regardless of whether the verifier performs any specific function or not.  
       
-2.3 When  querying a transaction through the Gevulot client, the server will only return relevant task information to the client if it has successfully obtained the task.result from the verifier.
-      
-Otherwise,  an error will be returned,such as "An error while fetching transaction tree: RPC response error:not found: no root tx found for xxxxxx...".
-
-
+   3) When  querying a transaction through the Gevulot client, the server will only return relevant task
+      information to the client if it has successfully obtained the task.result from the verifier.       
+     Otherwise,  an error will be returned,such as "An error while fetching transaction tree:  
+     RPC response error:not found: no root tx found for xxxxxx...".
+```
 
 ## Local system requirements
 
@@ -22,7 +29,7 @@ Otherwise,  an error will be returned,such as "An error while fetching transacti
    
 2. At least 16GB RAM with a 4-core CPU.
 
-3.Public IP address. (If you build your own http file server, you need to have a public IP.)  
+3. Public IP address. (If you build your own http file server, you need to have a public IP.)  
 
 4. Install the Rust(v1.79),  Cargo, Go(v1.22)  
 
@@ -30,9 +37,9 @@ Otherwise,  an error will be returned,such as "An error while fetching transacti
 
 1. Install the Gevulot CLI
 
-$ cargo install --git https://github.com/gevulotnetwork/gevulot.git gevulot-cli
+    $ cargo install --git https://github.com/gevulotnetwork/gevulot.git gevulot-cli
 
-if ok, It is similar to the following, otherwise ,please check the enviroment $PATH.
+    If the installation is ok, tt is similar to the following, otherwise ,please check the enviroment $PATH.
 
 ```sh
      $ gevulot-cli -V  
@@ -54,12 +61,12 @@ if ok, It is similar to the following, otherwise ,please check the enviroment $P
 3. Install the OPS （Ubuntu）
 
 ```sh 
-      $ curl https://ops.city/get.sh -sSfL | sh
+    $ curl https://ops.city/get.sh -sSfL | sh
   
-      $ sudo apt-get install qemu-kvm qemu-utils
+    $ sudo apt-get install qemu-kvm qemu-utils
 ```
      
-      check the OPS :
+    Check the OPS :
     
 ```
        $ cat hi.js
@@ -83,7 +90,7 @@ if ok, It is similar to the following, otherwise ,please check the enviroment $P
 ```
      
 > [!WARNING] 
-> The above is for  Ubuntu, other system please refer to https://docs.ops.city/ops/getting_started.  
+> The above installation is for  Ubuntu, other system please refer to https://docs.ops.city/ops/getting_started.  
 
 4. Install the http  file server
 
@@ -111,7 +118,7 @@ if ok, It is similar to the following, otherwise ,please check the enviroment $P
 
 ## Prover/Verifier Integration
      Please refer to the test programs : tests/shell-test/src/prover.rs and verifier.rs  .
-     Before compiling the test prover/verifier, please download the submodule code.
+     Before compiling the test prover/verifier, please download the submodule .
      
      $  git submodule update --init --recursive
 	Submodule 'eigen-zkvm' (https://github.com/0xEigenLabs/eigen-zkvm) registered for path 'eigen-zkvm'

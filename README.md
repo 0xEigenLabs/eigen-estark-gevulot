@@ -124,7 +124,7 @@
    $ cp -a  tests/shell-test/scripts/*  ~/packaging/  
 ```
   
-2. Please  edit the file ~/packaging/my-local-key.pki  according the above  "2. Register Gevulot Key".
+2. Please  edit the file ~/packaging/my-local-key.pki  according the above installation  "2. Register Gevulot Key".
 
 3. my_prover.json and my_verifier.json are for ops building images ,eg.
 
@@ -143,22 +143,21 @@ $ cat my_prover.json
 	  "Mounts": {
 	    "%1": "/workspace"
 	  },
-	 "Files": ["gevulot/starkStruct.json"]      //the prover's configure file , you should modify it according your prover !!
-	                                            //the file starkStruct.json will be packaged into OPS'S NanoVM image.
+	 "Files": ["gevulot/starkStruct.json"]      /*the prover's configure file , you should modify it according your prover !!
+	                                            the file starkStruct.json will be packaged into OPS'S NanoVM image. */
 	}
 ```
 
 4. copy the compiled prover/verifier to  ~/packaging .
    
-5. If your http file server's working path is /data/http, you can run the pack.sh  
-   to package  the prover/verifier and deploy them to the gevulot server .  
+5. Package the prover/verifier 
 $ cat pack.sh
 
 ```sh
 ops build ./prover  -c my_prover.json        ###build prover NanoVM image
 ops build ./verifier  -c my_verifier.json
 
-cp   ~/.ops/images/prover  /data/http/
+cp   ~/.ops/images/prover  /data/http/       ## copy the packaged prover/verifier to HTTP file server's working path !! 
 cp   ~/.ops/images/verifier  /data/http/
 
 
@@ -175,7 +174,7 @@ v_array=(${VHSH//:/ })
 v_hsh=${v_array[6]}
 
 echo "deploy the new image to gevulot:(NOTICE: Verifier should use its HASH!)"
-./deploy.sh $p_hsh $v_hsh
+./deploy.sh $p_hsh $v_hsh         ## If you want to package the program separately, please comment out this line.
 ```
 
 6. Deploy the prover/verifier
@@ -200,16 +199,32 @@ gevulot-cli --jsonurl "http://api.devnet.gevulot.com:9944" --keyfile my-local-ke
 ```
 
 > [!IMPORTANT]
->  1.If you utilize Amazon, Google, Microsoft, or any other third-party cloud service, you should replace the above  "http://4.145.88.10:8080/"
->  2. The above "--provermem 65536" means prover need 64G memory
+>  1.If you utilize Amazon, Google, Microsoft, or any other third-party cloud service, you should replace the above  "http://4.145.88.10:8080/" .
+>  2. The above "--provermem 65536" means prover need 64G memory . If the memory is not enough , the prover will  exit abnormally.
+>  3. The above "--provercpus 32" means prover need 32 CPU kernels .
 
-7. 2343242
+7. The pack.sh will automatically call deploy.sh, so simply running pack.sh will complete  packaging and deployment.
+   
+   If the pack.sh executes successfully, you will see logs similar to the following:
+
+```
+$ ./pack.sh
+Bootable image file:/home/devadmin/.ops/images/prover
+Bootable image file:/home/devadmin/.ops/images/verifier
+prover hash:The hash of the file is: 4be70f6588e9aca72249b42a4cc61568b75b2b8c4261e81e4f0de3e5d0f4910a
+verifier hash: The hash of the file is: 8c3b96021d975fdb77683a2784e16bf26519ea641b98fba1102e8c3e57d6f46a
+deploy the new image to guvulot platform...)
+Start prover / verifier deployment
+Prover / Verifier deployed correctly.
+Prover hash:515889c153fc40e413ccf81b41f8fda93fe5f66ee4a4a67b24762a4d5adfe132      //Remember this hash, as it will be needed for subsequent calls to the prover.
+Verifier hash:2c59feba99ff3010d842f7933dd5bea9fc8f250688cfcc78eb9d70c4e1af9173.   //Remember this hash, as it will be needed for subsequent calls to the verifier.
+Tx Hash:57991f11873da0d0a3a2fa578402476100a640618c4d5171fa5381292f9f8b3e
+```
+
+> [!IMPORTANT]
+> After deploying the prover/verifier successfully, it will return the prover hash and verifier hash which you must remember them, as remote calling prover/verifier need the hash. it means the hash is the identity identifier of the prover/verifier on OPS.
          
      
-## Prover/Verifier Deployment
-     1.ewrewrwr  
-     2. werwrw
-
 ## Prover/Verifier running
      1.ewrewrwr  
      2. werwrw

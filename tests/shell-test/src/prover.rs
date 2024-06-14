@@ -71,7 +71,7 @@ fn run_task(task: Task) -> Result<TaskResult> {
     let exec_result = stark_prove(
         &args.stark_struct,
         &args.piljson,
-        //args.norm_stage,  //The current gevulot release version doesn't support bool in its "cmd_args". The engineer gives a patch for the bug :
+        //args.norm_stage,  //The current gevulot release version doesn't support bool in its "cmd_args",eg. {"name":"--norm_stage","value": ""}. The engineer gives a patch for the bug :
                             //crates/cli/src/lib.rs  +138
                             /*let step = WorkflowStep {
                                 program: (&(hex::decode(args.program)

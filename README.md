@@ -117,6 +117,9 @@
  > if the http file server is ok,   the browser can visit it through the public IP and port 8080. (The port 8080 should be mapped to the machine in the router)
 
 ## Prover/Verifier Integration
+     
+     $ git clone https://github.com/0xEigenLabs/estark-gevulot.git
+     
      Please refer to the test programs : tests/shell-test/src/prover.rs and verifier.rs  .
 
      Compile the program.

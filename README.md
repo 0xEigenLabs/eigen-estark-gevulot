@@ -56,7 +56,7 @@
 > You should send the above public key to Gevulot through https://airtable.com/appS1ebiXFs8H4OP5/pagVuySwNkMe95tIi/form .
      
 > [!TIP]   
-> If you haven't received a reply email after one day, you can try the following deployment step using your key. If the attempt fails, please contact them on Telegram : https://t.me/gevulot.  
+> If you haven't received a reply email after one day, you can try the following "Prover/Verifier Packaging and Deployment" using your key. If the attempt fails, please contact them on Telegram : https://t.me/gevulot.  
 
 3. Install the OPS （Ubuntu）
 
@@ -66,10 +66,10 @@
     $ sudo apt-get install qemu-kvm qemu-utils
 ```
      
-    Check the OPS :
+    Check the OPS installation :
     
 ```
-       $ cat hi.js
+    $ cat hi.js
 	var http = require('http');  
 	http.createServer(function (req, res) {  
 	            res.writeHead(200, {'Content-Type': 'text/plain'});  
@@ -78,7 +78,7 @@
 	console.log('Server running at http://127.0.0.1:8083/');  
 ```
 
-        If the installation is ok, it is similar to the following:
+    If the installation is ok, it is similar to the following:
     
 ```
 	$ ops pkg load eyberg/node:20.5.0 -p 8099 -f -n -a hi.js  
@@ -106,7 +106,7 @@
     $ docker build --no-cache=true -t gohttpserver:v1.1 -f ./docker/Dockerfile .
 ```
  
-    run the http server:
+    Run the http server:
        
 ```
     $ mkdir /data/http    (the http server's working path)
@@ -118,23 +118,16 @@
 
 ## Prover/Verifier Integration
      Please refer to the test programs : tests/shell-test/src/prover.rs and verifier.rs  .
-     Before compiling the test prover/verifier, please download the submodule .
-     
-     $  git submodule update --init --recursive
-	Submodule 'eigen-zkvm' (https://github.com/0xEigenLabs/eigen-zkvm) registered for path 'eigen-zkvm'
-	Submodule 'gevulot' (https://github.com/gevulotnetwork/gevulot.git) registered for path 'gevulot'
-	Cloning into '/data/gavin/test/estark-gevulot/eigen-zkvm'...
-	Cloning into '/data/gavin/test/estark-gevulot/gevulot'...
-	Submodule path 'eigen-zkvm': checked out '69de4af8688e8e220f4d403a48ae804b9a755259'
-	Submodule path 'gevulot': checked out '82bff1109b96700470f0f7fb192e5ca0ad389251'
 
-     Then , compile the program.
+     Compile the program.
 
      $ cargo build
+
+     If it is ok, you will see the binary files (prover and verifier ) in the direcotry target/debug
      
 > [!IMPORTANT]
 > 1. The gevulot-cli can't get the dubug messages of the prover/verifier unless you seek assistance from their engineers.  
-> 2. To familiarize yourself with the debugging of the Gevulot  framework, it is recommended to comment out the Prove function inside the Prover. This way, after remotely running the prover/verifier, you will be able to immediately obtain the  prover's  log file  that can help you debug the program.
+> 2. To familiarize yourself with the debugging of the Gevulot  framework, it is recommended to comment out the Prove function inside the prover.rs . This way, after remotely running the prover/verifier, you will be able to immediately obtain the  prover's  log file  that can help you debug the program.
 
 
 ## Prover/Verifier Packaging and Deployment
@@ -163,7 +156,7 @@ $ cat my_prover.json
 	  },
 	  "Program":"prover",            //the binary file name of your prover which must be consistent with the prover name in pack.sh and deploy.sh
 	  "Mounts": {
-	    "%1": "/workspace"
+	    "%1": "/workspace"           //No changing it !!
 	  },
 	 "Files": ["gevulot/starkStruct.json"]      /*the prover's configure file , you should modify it according your prover !!
 	                                            the file starkStruct.json will be packaged into OPS'S NanoVM image. */
@@ -232,7 +225,7 @@ gevulot-cli --jsonurl "http://api.devnet.gevulot.com:9944" --keyfile my-local-ke
    
    If the pack.sh executes successfully, you will see logs similar to the following:
 
-```
+```sh
 $ ./pack.sh
 Bootable image file:/home/devadmin/.ops/images/prover
 Bootable image file:/home/devadmin/.ops/images/verifier
@@ -316,11 +309,11 @@ You can download them through the browser or wget .
 ![image](https://github.com/gavin-ygy/estark-gevulot/assets/762545/e4252181-f325-4187-b1d3-39e8907b3395)
 
 > [!IMPORTANT]
-> The template includes two parts: prover and verifier.  
-> /workspace  is mount path.  
-> /gevulot  is  config file path in the image (see my_prover.json,  ).   
-> Get the input file's hash : gevulot-cli calculate-hash --file jsn_fibonacci.recursive2.pil.json.   
-> The prover's output file name must be consistent with the file name returned in the prover.rs and verifier.rs .  
+> 1) The template includes two parts: prover and verifier.  
+> 2) /workspace  is mount path.  
+> 3) /gevulot  is  config file path in the image (see my_prover.json,  ).   
+> 4) Get the input file's hash : gevulot-cli calculate-hash --file jsn_fibonacci.recursive2.pil.json.   
+> 5) The prover's output file name must be consistent with the file name returned in the prover.rs and verifier.rs .  
 
 
 

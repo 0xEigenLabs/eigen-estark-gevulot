@@ -640,6 +640,7 @@ dependencies = [
 [[package]]
 name = "fields"
 version = "0.1.0"
+source = "git+https://github.com/0xEigenLabs/eigen-zkvm?branch=main#69de4af8688e8e220f4d403a48ae804b9a755259"
 dependencies = [
  "byteorder",
  "franklin-crypto",
@@ -830,10 +831,12 @@ dependencies = [
 [[package]]
 name = "gevulot-common"
 version = "0.1.0"
+source = "git+https://github.com/gevulotnetwork/gevulot#82bff1109b96700470f0f7fb192e5ca0ad389251"
 
 [[package]]
 name = "gevulot-shim"
 version = "0.1.0"
+source = "git+https://github.com/gevulotnetwork/gevulot#82bff1109b96700470f0f7fb192e5ca0ad389251"
 dependencies = [
  "anyhow",
  "async-stream",
@@ -1786,6 +1789,7 @@ checksum = "c85070f382340e8b23a75808e83573ddf65f9ad9143df9573ca37c1ed2ee956a"
 [[package]]
 name = "starky"
 version = "0.0.1"
+source = "git+https://github.com/0xEigenLabs/eigen-zkvm?branch=main#69de4af8688e8e220f4d403a48ae804b9a755259"
 dependencies = [
  "anyhow",
  "byteorder",

@@ -17,12 +17,15 @@ name = "verifier"
 path = "src/verifier.rs"
 
 [dependencies]
-starky = { package="starky", path = "../../eigen-zkvm/starky", version = "0.0.1" }
+##starky = { package="starky", path = "../../eigen-zkvm/starky", version = "0.0.1" }
+starky = { git = "https://github.com/0xEigenLabs/eigen-zkvm", branch = "main" }
 clap = { package = "clap", version = "4.3.4", features = ["derive"] }
 num-traits = "0.2.8"
 rand = "0.4"
-gevulot-shim = { path = "../../gevulot/crates/shim" }
-gevulot-common = { path = "../../gevulot/crates/common" }
+##gevulot-shim = { path = "../../gevulot/crates/shim" }
+##gevulot-common = { path = "../../gevulot/crates/common" }
+gevulot-shim = { git = "https://github.com/gevulotnetwork/gevulot" }
+gevulot-common = { git = "https://github.com/gevulotnetwork/gevulot" }
 
 # error and log
 log = "0.4.0"

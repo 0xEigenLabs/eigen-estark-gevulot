@@ -1,6 +1,0 @@
-[submodule "eigen-zkvm"]
-	path = eigen-zkvm
-	url = https://github.com/0xEigenLabs/eigen-zkvm
-[submodule "gevulot"]
-	path = gevulot
-	url = https://github.com/gevulotnetwork/gevulot.git

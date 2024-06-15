@@ -39,7 +39,7 @@
 
     $ cargo install --git https://github.com/gevulotnetwork/gevulot.git gevulot-cli
 
-    If the installation is ok, tt is similar to the following, otherwise ,please check the enviroment $PATH.
+    If the installation is ok, it is similar to the following, otherwise ,please check the enviroment $PATH.
 
 ```sh
      $ gevulot-cli -V  
@@ -56,7 +56,8 @@
 > You should send the above public key to Gevulot through https://airtable.com/appS1ebiXFs8H4OP5/pagVuySwNkMe95tIi/form .
      
 > [!TIP]   
-> If you haven't received a reply email after one day, you can try the following "Prover/Verifier Packaging and Deployment" using your key. If the attempt fails, please contact them on Telegram : https://t.me/gevulot.  
+> If you haven't received a reply email after one day, you can try the following "Prover/Verifier Packaging and Deployment" using your key.  
+> If the attempt fails, please contact them on Telegram : https://t.me/gevulot.  
 
 3. Install the OPS （Ubuntu）
 
@@ -129,8 +130,10 @@
      If it is ok, you will see the binary files (prover and verifier ) in the direcotry target/debug
      
 > [!IMPORTANT]
-> 1. The gevulot-cli can't get the dubug messages of the prover/verifier unless you seek assistance from their engineers.  
-> 2. To familiarize yourself with the debugging of the Gevulot  framework, it is recommended to comment out the Prove function inside the prover.rs . This way, after remotely running the prover/verifier, you will be able to immediately obtain the  prover's  log file  that can help you debug the program.
+> 1. The gevulot-cli can't get the dubug messages of the prover/verifier unless you seek assistance from their engineers.
+  
+> 2. To familiarize yourself with the debugging of the Gevulot  framework, it is recommended to comment out the Prove function inside the prover.rs .   
+    This way, after remotely running the prover/verifier, you will be able to immediately obtain the  prover's  log file  that can help you debug the program.
 
 
 ## Prover/Verifier Packaging and Deployment
@@ -177,7 +180,8 @@ ops build ./prover  -c my_prover.json      ###build prover NanoVM image. If the 
                                            ## you mkdir gevulot and cp starkStruct.json  gevulot/  .
 ops build ./verifier  -c my_verifier.json
 
-cp   ~/.ops/images/prover  /data/http/       ## copy the packaged prover/verifier to HTTP  server's working path !! 
+cp   ~/.ops/images/prover  /data/http/       ## copy the packaged prover/verifier to HTTP  server's working path !!
+
 cp   ~/.ops/images/verifier  /data/http/
 
 

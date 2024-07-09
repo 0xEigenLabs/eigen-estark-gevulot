@@ -1,9 +1,7 @@
  ## Gevulot Overview(not including the blockchain)
 
 1. The Gevulot is a decentralized computing power service platform, on which you can deploy custom zero-knowledge proving services.The following is the system diagram
-     ![image](https://github.com/gavin-ygy/estark-gevulot/assets/762545/b21fe21f-e533-4f1d-90e0-922adaafcd0b)
-
-
+    ![image](https://github.com/gavin-ygy/eigen-estark-gevulot/assets/762545/23bd1868-ef2a-4540-b9b8-8acbf413cad3)
 
 > [!NOTE]
 > For more information about Gevulot see: https://docs.gevulot.com/gevulot-docs .  

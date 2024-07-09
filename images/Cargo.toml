@@ -1,0 +1,61 @@
+[package]
+name = "images"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[[bin]]
+name = "gevulot-prover"
+path = "src/prover.rs"
+
+[[bin]]
+name = "gevulot-verifier"
+path = "src/verifier.rs"
+
+[dependencies]
+gevulot-node = { git = "https://github.com/gevulotnetwork/gevulot" }
+gevulot-cli   =  { git = "https://github.com/gevulotnetwork/gevulot" }
+gevulot-shim = { git = "https://github.com/gevulotnetwork/gevulot" }
+libsecp256k1 = "0.7"
+blake3 = { version = "1.5", features = [ "mmap" ] }
+
+###
+starky = { git = "https://github.com/0xEigenLabs/eigen-zkvm", branch = "main", default-features = false }
+recursion = { git = "https://github.com/0xEigenLabs/eigen-zkvm", branch = "main", default-features = false }
+##plonky = { git = "https://github.com/0xEigenLabs/eigen-zkvm", branch = "main", default-features = false }
+#groth16 = { git = "https://github.com/0xEigenLabs/eigen-zkvm", branch = "main", default-features = false  }
+#algebraic = { git = "https://github.com/0xEigenLabs/eigen-zkvm", branch = "main"  }
+#dsl_compile = { git = "https://github.com/0xEigenLabs/eigen-zkvm", branch = "main" }
+zkvm = { git = "https://github.com/0xEigenLabs/eigen-zkvm", branch = "main", default-features = false }
+
+powdr = { git = "https://github.com/0xEigenLabs/powdr", branch = "binary-mux2", default-features = false }
+##powdr =   { git = "https://github.com/eigmax/powdr", branch = "feature-starky-avx512", default-features = false }
+
+
+tokio = { version = "1.21.0", features = ["macros", "rt-multi-thread", "signal", "sync"] }
+uuid = { version = "1.2", features = ["v4", "fast-rng", "macro-diagnostics"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+anyhow = "1.0"
+log = "0.4.0"
+clap = { package = "clap", version = "4.3.4", features = ["derive"] }
+
+env_logger = "0.10"
+
+sha3 = "0.10"
+url = "2.5.0"
+hex = "0.4"
+
+futures-util = { version = "0.3", default-features = false }
+http-body-util = "0.1"
+hyper = { version = "1", features = ["full"] }
+hyper-util = { version = "0.1", features = ["full"] }
+indicatif = "0.17.7"
+tracing-subscriber = "0.3.18"
+tokio-util = "0.7"
+
+reqwest = "0.11"
+
+[features]
+default = []
+avx512 = ["starky/avx512", "recursion/avx512", "powdr/starky-avx512"]

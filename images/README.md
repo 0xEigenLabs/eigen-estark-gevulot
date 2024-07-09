@@ -114,7 +114,7 @@ Verifier hash:8ed2ce60093677ee957054dc0afcebfd1c31203f77a602aaf3fcce94e2419244. 
 Tx Hash:f125d319a0a66fbd4a05e82e5ccf60c9827216ac499074fd2d6820a9a5d79cc6
 ```
 
-## Call the remote proof service
+## Calling the remote proof service
 
 1. The API
 

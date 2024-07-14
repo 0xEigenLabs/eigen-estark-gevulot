@@ -5,7 +5,7 @@ gevulot-cli --jsonurl "http://api.devnet.gevulot.com:9944" --keyfile my-local-ke
         --provername '#eigen-gevulot-prover' \
         --proverimgurl 'http://4.145.88.10:8080/gevulot-prover' \
         --provercpus 32 \
-        --provermem 262144 \
+        --provermem 302144 \
         --provergpus 0 \
         --verifier $2 \
         --verifiername '#eigen-gevulot-verifier' \

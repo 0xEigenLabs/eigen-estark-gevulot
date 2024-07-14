@@ -7,9 +7,8 @@ let eval: expr -> fe = [];
 enum Query {
     /// Query a prover input element by index.
     Input(int),
-    /// Writes a byte (second argument) to a file descriptor (first argument).
-    /// fd 1 is stdout, fd 2 is stderr.
-    Output(int, int),
+    /// Print a character on stdout.
+    PrintChar(int),
     /// Generate a hint to fill a witness column with.
     Hint(fe),
     /// Query a prover input element by index and data id.
@@ -26,7 +25,7 @@ let challenge: int, int -> expr = [];
 let degree: -> int = [];
 
 /// Asserts that the current degree or row count is at least m.
-let require_min_degree: int -> () = |m| std::check::assert(degree() >= m, || "Degree too small.");
+let require_min_degree: int -> Constr[] = |m| std::check::assert(degree() >= m, || "Degree too small.");
 
 /// Asserts that the current degree or row count is at most m;
-let require_max_degree: int -> () = |m| std::check::assert(degree() <= m, || "Degree too large.");
+let require_max_degree: int -> Constr[] = |m| std::check::assert(degree() <= m, || "Degree too large.");

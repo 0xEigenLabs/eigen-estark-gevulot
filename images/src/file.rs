@@ -187,8 +187,13 @@ pub async fn run_prove(
     let tx_hash = send_transaction(&client, &tx).await?;
 
     ///////////
-    
-    let leaf_hash = get_leaf_hash(&client, &tx_hash).await.expect("Option<Hash> does not have a value");
+    let wait_time :u64;
+    if  task_name == "lr".to_string(){
+        wait_time =300 ;//second
+    }else{
+        wait_time =1100 ;
+    }
+    let leaf_hash = get_leaf_hash(&client, &tx_hash, wait_time).await.expect("Option<Hash> does not have a value");
 
     let json_content = get_leaf_cnt(&client,leaf_hash).await?;
     
@@ -256,7 +261,7 @@ pub async fn send_transaction(client: &RpcClient, tx: &Transaction<Created>) -> 
 }
 
 
-pub async fn get_leaf_hash(client: &RpcClient, hash: &Hash)->Option<Hash>{
+pub async fn get_leaf_hash(client: &RpcClient, hash: &Hash, waiting_time: u64)->Option<Hash>{
     //wait a few minutes for the proving task to finish
     log::info!("waiting the proving task to finish");
     sleep(Duration::from_secs(250)).await;

@@ -5,7 +5,7 @@
   "Env":{
     "POWDR_STD":"powdr",
     "RUST_BACKTRACE": "1",
-    "RUST_LOG": "debug"
+    "RUST_LOG": "info"
   },
   "Program":"gevulot-prover",
   "Mounts": {

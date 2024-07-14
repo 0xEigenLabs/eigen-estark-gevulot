@@ -30,4 +30,15 @@ echo " "
 
 echo "deploy the new image to gevulot platform...)"
 TEMPLOG=$(./deploy.sh $p_hsh $v_hsh )
-echo "$TEMPLOG"
+#echo "dd:$TEMPLOG"
+
+p_array=(${TEMPLOG//:/ })
+
+tphsh=${p_array[12]}
+tvhsh=${p_array[15]}
+echo "task P hash:$tphsh"
+echo "task V hash:$tvhsh"
+##
+echo " "
+echo " run evm task : "
+ ./e2e-test.sh  $tphsh ${tvhsh%.}

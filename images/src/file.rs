@@ -60,7 +60,8 @@ pub  struct Root {
     pub signature: String,
 }
 
-type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+//type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+type BoxResult<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 pub async fn run_prover(
     json_rpc_url: &String,
@@ -87,7 +88,7 @@ pub async fn run_prover(
         .build(json_rpc_url.to_owned())
         .expect("build rpc client");
 
-    let tx_hash = call_rpc_prover(&client, &keyfile, &prover_hash, &verifier_hash , &trace_file, &bi_file,
+    let tx_hash = call_rpc_prover(&client, &keyfile, &prove_program_hsh, &verify_program_hsh , &trace_file, &bi_file,
         &asm_file,
         &task_name,
         &chunk_id,
@@ -138,7 +139,7 @@ pub async fn call_rpc_prover(client: &RpcClient,
     task_name: &String,
     chunk_id : &String,
     http_server_work_path:&String,
-    local_http_url: &String)-> std::result::Result<Hash, String>{
+    local_http_url: &String)-> BoxResult<(String)>{
 
     let key = keyfile::read_key_file(&keyfile).map_err(|err| {
             format!(
@@ -239,12 +240,14 @@ pub async fn call_rpc_prover(client: &RpcClient,
         &key,
     );
 
-    send_transaction(&client, &tx).await?
-
+    let tx_hash = send_transaction(&client, &tx).await?;
+    
+    Ok(tx_hash)
 }
 
 // Asynchronous function to download a file from a URL and save it to a specified directory.
-pub async fn download_file(url: &str, path: &str) -> Result<()> {
+//pub async fn download_file(url: &str, path: &str) -> Result<()> {
+pub async fn download_file(url: &str, path: &str) -> BoxResult<()> {
     // Send a GET request to the specified URL.
     let mut response = reqwest::get(url).await?;
 
@@ -338,7 +341,7 @@ pub async fn get_leaf_hash(client: &RpcClient, hash: &Hash, waiting_time: u64)->
     
 }
 
-type BoxResult<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+
 
 pub async fn file_hash(file:&String, http_server_work_path:&String)->BoxResult<String> {
 

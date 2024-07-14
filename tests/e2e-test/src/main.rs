@@ -61,7 +61,7 @@ async fn main() -> Result<()> {
     let start = Instant::now();
     
 
-     run_prove(&cfg.json_rpc_url, &cfg.key_file, &cfg.prover_hash, &cfg.verifier_hash , &cfg.trace_file, &cfg.bi_file,
+     run_prover(&cfg.json_rpc_url, &cfg.key_file, &cfg.prover_hash, &cfg.verifier_hash , &cfg.trace_file, &cfg.bi_file,
                     &cfg.asm_file,
                     &cfg.task_name,
                     &cfg.chunk_id,

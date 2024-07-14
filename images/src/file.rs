@@ -139,7 +139,7 @@ pub async fn call_rpc_prover(client: &RpcClient,
     task_name: &String,
     chunk_id : &String,
     http_server_work_path:&String,
-    local_http_url: &String)-> BoxResult<(String)>{
+    local_http_url: &String)-> BoxResult<(Hash)>{
 
     let key = keyfile::read_key_file(&keyfile).map_err(|err| {
             format!(

@@ -188,7 +188,7 @@ pub async fn run_prove(
 
     ///////////
     let wait_time :u64;
-    if  task_name == "lr".to_string(){
+    if  *task_name == "lr".to_string(){
         wait_time =300 ;//second
     }else{
         wait_time =1100 ;

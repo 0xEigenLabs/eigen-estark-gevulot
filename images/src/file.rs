@@ -60,7 +60,6 @@ pub  struct Root {
     pub signature: String,
 }
 
-//type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 type BoxResult<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 pub async fn run_prover(
@@ -246,7 +245,6 @@ pub async fn call_rpc_prover(client: &RpcClient,
 }
 
 // Asynchronous function to download a file from a URL and save it to a specified directory.
-//pub async fn download_file(url: &str, path: &str) -> Result<()> {
 pub async fn download_file(url: &str, path: &str) -> BoxResult<()> {
     // Send a GET request to the specified URL.
     let mut response = reqwest::get(url).await?;
@@ -290,9 +288,8 @@ pub async fn send_transaction(client: &RpcClient, tx: &Transaction<Created>) -> 
 pub async fn get_leaf_hash(client: &RpcClient, hash: &Hash, waiting_time: u64)->Option<Hash>{
     //wait a few minutes for the proving task to finish
     log::info!("waiting the proving task to finish");
-    sleep(Duration::from_secs(250)).await;
+    sleep(Duration::from_secs(waiting_time)).await;
     let mut counter = 0;
-    //let hash = Hash::from(tx_hash);
 
     loop{
         match client.get_tx_tree(&hash).await {
@@ -329,8 +326,9 @@ pub async fn get_leaf_hash(client: &RpcClient, hash: &Hash, waiting_time: u64)->
         };
 
         counter +=1;
-        if counter >15 {//Maybe different proving task costs different time !!
-            //break;
+        if counter >50 {//Maybe different proving task costs different time !!
+            //try 50 times, about 50*20s=1000s 
+
             return None;
         }
          

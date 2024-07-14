@@ -27,18 +27,18 @@ fn generate_witness_and_prove<F: FieldElement>(
     mut pipeline: Pipeline<F>,
 ) -> Result<(), Vec<String>> {
     let start = Instant::now();
-    log::debug!("Generating witness...");
+    log::info!("Generating witness...");
     pipeline.compute_witness().unwrap();
     let duration = start.elapsed();
-    log::debug!("Generating witness took: {:?}", duration);
+    log::info!("Generating witness took: {:?}", duration);
 
     let start = Instant::now();
-    log::debug!("Proving ...");
+    log::info!("Proving ...");
 
     pipeline = pipeline.with_backend(BackendType::EStarkStarky, Some("stark_gl".to_string()));
     pipeline.compute_proof().unwrap();
     let duration = start.elapsed();
-    log::debug!("Proving took: {:?}", duration);
+    log::info!("Proving took: {:?}", duration);
     Ok(())
 }
 
@@ -50,9 +50,9 @@ fn generate_verifier<F: FieldElement, W: std::io::Write>(
     let mut vw = BufWriter::new(buf);
     pipeline = pipeline.with_backend(BackendType::EStarkStarky, Some("stark_gl".to_string()));
     pipeline.export_verification_key(&mut vw).unwrap();
-    log::debug!("Export verification key done");
+    log::info!("Export verification key done");
     let mut setup: StarkSetup<MerkleTreeGL> = serde_json::from_slice(&vw.into_inner()?)?;
-    log::debug!("Load StarkSetup done");
+    log::info!("Load StarkSetup done");
 
     let pil = pipeline.optimized_pil().unwrap();
 
@@ -99,7 +99,7 @@ fn generate_verifier<F: FieldElement, W: std::io::Write>(
 }
 
 pub fn zkvm_execute_and_prove(task: &str, suite_json: String, output_path: &str) -> Result<()> {
-    log::debug!("Compiling Rust...");
+    log::info!("Compiling Rust...");
     let force_overwrite = true;
     let with_bootloader = true;
     let (asm_file_path, asm_contents) = compile_rust::<GoldilocksField>(
@@ -118,16 +118,16 @@ pub fn zkvm_execute_and_prove(task: &str, suite_json: String, output_path: &str)
         .with_prover_inputs(Default::default())
         .add_data(TEST_CHANNEL, &suite_json);
 
-    log::debug!("Computing fixed columns...");
+    log::info!("Computing fixed columns...");
     let start = Instant::now();
 
     pipeline.compute_fixed_cols().unwrap();
 
     let duration = start.elapsed();
-    log::debug!("Computing fixed columns took: {:?}", duration);
+    log::info!("Computing fixed columns took: {:?}", duration);
 
     /*
-    log::debug!("Running powdr-riscv executor in fast mode...");
+    log::info!("Running powdr-riscv executor in fast mode...");
     let start = Instant::now();
 
     let (trace, _mem) = powdr::riscv_executor::execute::<GoldilocksField>(
@@ -185,16 +185,16 @@ pub fn zkvm_generate_chunks(
         .with_prover_inputs(Default::default())
         .add_data(TEST_CHANNEL, suite_json);
 
-    log::debug!("Running powdr-riscv executor in fast mode...");
+    log::info!("Running powdr-riscv executor in fast mode...");
 
 
-    log::debug!("Running powdr-riscv executor in trace mode for continuations...");
+    log::info!("Running powdr-riscv executor in trace mode for continuations...");
     let start = Instant::now();
 
     let bootloader_inputs = rust_continuations_dry_run(&mut pipeline);
 
     let duration = start.elapsed();
-    log::debug!(
+    log::info!(
         "Trace executor took: {:?}, input size: {:?}",
         duration,
         bootloader_inputs.len()
@@ -211,7 +211,7 @@ pub fn zkvm_prove_only(
     i: usize,
     output_path: &str,
 ) -> Result<()> {
-    log::debug!("Compiling Rust...");
+    log::info!("Compiling Rust...");
     let asm_file_path = Path::new(output_path).join(format!("{}.asm", task));
 
     let pipeline = Pipeline::<GoldilocksField>::default()
@@ -220,7 +220,7 @@ pub fn zkvm_prove_only(
         .with_prover_inputs(Default::default())
         .add_data(TEST_CHANNEL, suite_json);
 
-    log::debug!("Running witness generation and proof computation...");
+    log::info!("Running witness generation and proof computation...");
     let start = Instant::now();
 
     //TODO: if we clone it, we lost the information gained from this function
@@ -235,7 +235,7 @@ pub fn zkvm_prove_only(
     .unwrap();
  
     let verifier_file = Path::new(output_path).join(format!("{}_chunk_{}.circom", task, i));
-    log::debug!(
+    log::info!(
         "Running circom verifier generation to {:?}...",
         verifier_file
     );
@@ -243,7 +243,7 @@ pub fn zkvm_prove_only(
     generate_verifier(pipeline, f).unwrap();
 
     let duration = start.elapsed();
-    log::debug!(
+    log::info!(
         "Witness generation and proof computation took: {:?}",
         duration
     );
@@ -265,7 +265,6 @@ where
     // Here the fixed columns most likely will have been computed already,
     // in which case this will be a no-op.
 
- 
     pipeline.compute_fixed_cols().unwrap();
 
     // we can assume optimized_pil has been computed

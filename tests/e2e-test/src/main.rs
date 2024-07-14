@@ -4,7 +4,7 @@ use clap::Parser;
 use std::time::Instant;
 use std::path::PathBuf;
 
-use images::file::run_prove;
+use images::file::run_prover;
 
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;

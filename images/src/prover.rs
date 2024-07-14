@@ -273,7 +273,7 @@ where
    // std::fs::write("/workspace/debug.log", b"rust_continuation():3333333 \n").unwrap();
 
     let name = format!("{}_chunk_{}", task, i);
-    log::debug!("\nRunning chunk {} in {}...", i + 1, name);
+    log::info!("\nRunning chunk {} in {}...", i + 1, name);
 
     
     // now we should do
@@ -341,7 +341,7 @@ fn run_task(task: Task) -> GeResult<TaskResult> {
     let start = Instant::now();
     env_logger::init();
     
-    println!("0xEigenLabs prover : task.args: {:?}", &task.args);
+    log::info!("0xEigenLabs prover : task.args: {:?}", &task.args);
 
     //let args =  Cli::parse();
     let args =  Cli::parse_from(&task.args);

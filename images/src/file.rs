@@ -62,7 +62,7 @@ pub  struct Root {
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
-pub async fn run_prove(
+pub async fn run_prover(
     json_rpc_url: &String,
     keyfile: &PathBuf,
     prove_program_hsh: &String,
@@ -77,12 +77,7 @@ pub async fn run_prove(
     proof_file_out_path:  &String,
     rpc_timeout: Option<u64>
 ) -> BoxResult<()> {
-    let key = keyfile::read_key_file(&keyfile).map_err(|err| {
-        format!(
-            "Error during key file:{} reading:{err}",
-            keyfile.to_str().unwrap_or("")
-        )
-    })?;
+    
 
     let mut client_builder = RpcClientBuilder::default();
     if let Some(rpc_tm_out) = rpc_timeout {
@@ -91,6 +86,66 @@ pub async fn run_prove(
     let client = client_builder
         .build(json_rpc_url.to_owned())
         .expect("build rpc client");
+
+    let tx_hash = call_rpc_prover(&client, &keyfile, &prover_hash, &verifier_hash , &trace_file, &bi_file,
+        &asm_file,
+        &task_name,
+        &chunk_id,
+        &http_server_work_path,
+        &local_http_url).await?; 
+
+    ///////////
+    let wait_time :u64;
+    if  *task_name == "lr".to_string(){
+        wait_time =300 ;//second
+    }else{
+        wait_time =1100 ;
+    }
+    let leaf_hash = get_leaf_hash(&client, &tx_hash, wait_time).await.expect("Option<Hash> does not have a value");
+
+    let json_content = get_leaf_cnt(&client,leaf_hash).await?;
+    
+    log::info!("Leaf content: ");
+    let parsed: Root = serde_json::from_str(&json_content)?;
+   
+    //Download the result files from Gevulot server
+    for file in parsed.payload.Verification.files {
+        log::info!("File URL: {}", file.url);
+        log::info!("VM Path: {}", file.vm_path);
+        
+        //let path_str = "/work/test.log";
+        let path = Path::new(&file.vm_path);
+    
+        let file_name_os_str = path.file_name().expect("Path should have a file name");
+    
+        let file_name = OsStr::to_string_lossy(file_name_os_str).to_string();
+        let  file_path = format!("{}{}",&proof_file_out_path, file_name);
+
+       let _ = download_file(&file.url, &file_path).await.expect("Failed to download file");
+    }
+    //////////
+
+    Ok(())
+}
+
+pub async fn call_rpc_prover(client: &RpcClient,
+    keyfile: &PathBuf,
+    prove_program_hsh: &String,
+    verify_program_hsh: &String,
+    trace_file: &String,
+    bi_file: &String,
+    asm_file: &String,
+    task_name: &String,
+    chunk_id : &String,
+    http_server_work_path:&String,
+    local_http_url: &String)-> std::result::Result<Hash, String>{
+
+    let key = keyfile::read_key_file(&keyfile).map_err(|err| {
+            format!(
+                "Error during key file:{} reading:{err}",
+                keyfile.to_str().unwrap_or("")
+            )
+        })?;
 
     //the http_server_work_path is set during the installation of the http file server.
     let  trace_file_hsh = file_hash(&trace_file, &http_server_work_path).await?;
@@ -184,40 +239,8 @@ pub async fn run_prove(
         &key,
     );
 
-    let tx_hash = send_transaction(&client, &tx).await?;
+    send_transaction(&client, &tx).await?
 
-    ///////////
-    let wait_time :u64;
-    if  *task_name == "lr".to_string(){
-        wait_time =300 ;//second
-    }else{
-        wait_time =1100 ;
-    }
-    let leaf_hash = get_leaf_hash(&client, &tx_hash, wait_time).await.expect("Option<Hash> does not have a value");
-
-    let json_content = get_leaf_cnt(&client,leaf_hash).await?;
-    
-    log::info!("Leaf content: ");
-    let parsed: Root = serde_json::from_str(&json_content)?;
-   
-    //Download the result files from Gevulot server
-    for file in parsed.payload.Verification.files {
-        log::info!("File URL: {}", file.url);
-        log::info!("VM Path: {}", file.vm_path);
-        
-        //let path_str = "/work/test.log";
-        let path = Path::new(&file.vm_path);
-    
-        let file_name_os_str = path.file_name().expect("Path should have a file name");
-    
-        let file_name = OsStr::to_string_lossy(file_name_os_str).to_string();
-        let  file_path = format!("{}{}",&proof_file_out_path, file_name);
-
-       let _ = download_file(&file.url, &file_path).await.expect("Failed to download file");
-    }
-    //////////
-
-    Ok(())
 }
 
 // Asynchronous function to download a file from a URL and save it to a specified directory.

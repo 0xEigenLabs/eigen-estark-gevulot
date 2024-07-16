@@ -1,7 +1,7 @@
  ## Gevulot Overview(not including the blockchain)
 
-1. System diagram
-      ![image](https://github.com/gavin-ygy/estark-gevulot/assets/762545/6edb5c87-1c95-496c-b505-1fc979493b30)
+1. The Gevulot is a decentralized computing power service platform, on which you can deploy custom zero-knowledge proving services.The following is the system diagram
+    ![image](https://github.com/gavin-ygy/eigen-estark-gevulot/assets/762545/23bd1868-ef2a-4540-b9b8-8acbf413cad3)
 
 > [!NOTE]
 > For more information about Gevulot see: https://docs.gevulot.com/gevulot-docs .  
@@ -10,18 +10,69 @@
 2. Key Points
 
 ```
-   1) The user's prover or verifier programs must be packaged into OPS-formatted NonaVMs file.
+   1) The user's prover and  verifier programs must be packaged into OPS-formatted NonaVMs files.
       Then, the NonaVMs can be  transmitted to the Gevulot server through    
        the Gevulot client, and the server schedules them to run on OPS.
 
    2) The Gevulot server mandates the sequential execution of the prover and verifier,  
-      regardless of whether the verifier performs any specific function or not.  
+      regardless of whether the verifier performs any specific function or not.
+      This means that running one of the programs individually, the client cannot obtain the correct result. 
       
    3) When  querying a transaction through the Gevulot client, the server will only return relevant task
       information to the client if it has successfully obtained the task.result from the verifier.       
      Otherwise,  an error will be returned,such as "An error while fetching transaction tree:  
      RPC response error:not found: no root tx found for xxxxxx...".
 ```
+
+## This project introduction
+
+1.Separate the CPU and memory-intensive proof program from estark and deploy it independently onto the Gevulot platform.
+
+2.Project Directory Structure:
+
+```
+── images                 //Production Version : proof and verification program.
+│   ├── Cargo.toml
+│   └── src
+│       ├── file.rs
+│       ├── lib.rs
+│       ├── prover.rs
+│       └── verifier.rs
+
+── e2e-test              //Test program for the production Version.
+    │   ├── Cargo.toml
+    │   ├── config
+    │   │   └── prover.json
+    │   └── src
+    │       └── main.rs
+
+└── shell-test          //Test version just for helping you  mastering   the entire Process
+        ├── Cargo.toml
+        ├── input-files
+        │   ├── cm_fibonacci.recursive2.cm
+        │   ├── cst_fibonacci.recursive2.const
+        │   ├── jsn_fibonacci.recursive2.pil.json
+        │   └── starkStruct.json
+        ├── scripts
+        │   ├── check-leaf.sh
+        │   ├── check-tree.sh
+        │   ├── deploy.sh
+        │   ├── generate_task.sh
+        │   ├── gevulot
+        │   │   └── starkStruct.json
+        │   ├── my-local-key.pki
+        │   ├── my_prover.json
+        │   ├── my_verifier.json
+        │   ├── pack.sh
+        │   └── run_task.tmpl
+        └── src
+            ├── prover.rs
+            └── verifier.rs
+```
+
+> [!WARNING] 
+> The Readme is for test version (shell-test) and help you understand the system. If you have mastered the system, you can refer to the production version's Readme(images/README).  
+
 
 ## Local system requirements
 
@@ -131,8 +182,11 @@
      
 > [!IMPORTANT]
 > 1. The gevulot-cli can't get the dubug messages of the prover/verifier unless you seek assistance from their engineers.
-  
-> 2. To familiarize yourself with the debugging of the Gevulot  framework, it is recommended to comment out the Prove function inside the prover.rs .   
+
+> 2. If you want to debug your proof program more quickly, you'd better install a Gevulot Node locally.So you can check any debug and panic message.
+     It is very easy to intall the local node , please refer to :https://blog.gevulot.com/p/run-a-local-gevulot-prover-node
+ 
+> 3. To familiarize yourself with the debugging of the Gevulot  framework, it is recommended to comment out the Prove function inside the prover.rs .   
     This way, after remotely running the prover/verifier, you will be able to immediately obtain the  prover's  log file  that can help you debug the program.
 
 

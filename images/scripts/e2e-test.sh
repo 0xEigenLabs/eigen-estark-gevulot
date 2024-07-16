@@ -1,0 +1,1 @@
+RUST_LOG=debug ../target/release/eigen-gevulot-e2e-tests  --local-http-url http://4.145.88.10:8080   --json-rpc-url  http://api.devnet.gevulot.com:9944  --trace_file reth.block.json --task_name evm --bi_file evm_chunks_0.data --asm_file evm.asm --chunk_id 0  --key-file localkey.pki --prover-hash $1  --verifier-hash $2

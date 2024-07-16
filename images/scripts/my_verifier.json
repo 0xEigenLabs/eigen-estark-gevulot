@@ -1,0 +1,14 @@
+{
+  "ManifestPassthrough": {
+    "readonly_rootfs": "true"
+  },
+  "Env":{
+    "RUST_BACKTRACE": "1",
+    "RUST_LOG": "debug"
+  },
+  "Program":"gevulot-verifier",
+  "Mounts": {
+    "%1": "/workspace"
+  }
+
+}

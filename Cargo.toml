@@ -1,5 +1,7 @@
 [workspace]
 members = [
-  "tests/shell-test"
+  "images",
+  "tests/shell-test",
+  "tests/e2e-test"
   ]
 resolver = "2"

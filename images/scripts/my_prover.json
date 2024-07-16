@@ -1,0 +1,16 @@
+{
+  "ManifestPassthrough": {
+    "readonly_rootfs": "true"
+  },
+  "Env":{
+    "POWDR_STD":"powdr",
+    "RUST_BACKTRACE": "1",
+    "RUST_LOG": "info"
+  },
+  "Program":"gevulot-prover",
+  "Mounts": {
+    "%1": "/workspace"
+  },
+ "Files": ["powdr/math/ff.asm","powdr/math/fp2.asm","powdr/math/mod.asm","powdr/protocols/mod.asm","powdr/protocols/permutation.asm","powdr/machines/arith.asm","powdr/machines/binary.asm","powdr/machines/memory.asm","powdr/machines/mod.asm","powdr/machines/shift.asm","powdr/machines/write_once_memory.asm","powdr/machines/hash/mod.asm","powdr/machines/hash/poseidon_bn254.asm","powdr/machines/hash/poseidon_gl.asm","powdr/machines/split/mod.asm","powdr/machines/split/split_bn254.asm","powdr/machines/split/split_gl.asm","powdr/mod.asm","powdr/array.asm","powdr/btree.asm","powdr/check.asm","powdr/convert.asm","powdr/debug.asm","powdr/field.asm","powdr/prelude.asm","powdr/prover.asm","powdr/utils.asm"]
+
+}

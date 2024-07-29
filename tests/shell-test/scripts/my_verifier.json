@@ -6,7 +6,7 @@
     "RUST_BACKTRACE": "1",
     "RUST_LOG": "debug"
   },
-  "Program":"eigen-gevulot-verifier",
+  "Program":"verifier",
   "Mounts": {
     "%1": "/workspace"
   },
